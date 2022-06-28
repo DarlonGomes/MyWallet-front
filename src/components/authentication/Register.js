@@ -53,7 +53,7 @@ function Register () {
     function toggleButton () {
         if(isDisabled === true){
             return (
-                <button><ThreeDots  color="#FFFFFF" height={17} width={299} /></button>
+                <button><ThreeDots  color="#FFFFFF" height={17} width={326} /></button>
             )
         }
 
