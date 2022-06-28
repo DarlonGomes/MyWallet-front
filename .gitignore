@@ -20,6 +20,7 @@ package-lock.json
 .env.production.local
 .prettierrc
 .eslintrc.json
+.vscode
 
 npm-debug.log*
 yarn-debug.log*
