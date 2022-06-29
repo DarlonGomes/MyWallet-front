@@ -53,7 +53,7 @@ function Spending () {
         )
     }
 
-    const Toggle = toggleButton();
+    const ButtonToggle = toggleButton();
 
     return(
         <Page>
@@ -75,7 +75,7 @@ function Spending () {
             placeholder= "Descrição"
             required
             ></input>
-            {Toggle}
+            {ButtonToggle}
             </form>
         </Page>
     )

@@ -53,7 +53,7 @@ import { ThreeDots } from "react-loader-spinner";
             )
         }
     
-        const Toggle = toggleButton();
+        const ButtonToggle = toggleButton();
     
         return(
             <Page>
@@ -75,7 +75,7 @@ import { ThreeDots } from "react-loader-spinner";
                 placeholder= "Descrição"
                 required
                 ></input>
-                {Toggle}
+                {ButtonToggle}
                 </form>
             </Page>
         )

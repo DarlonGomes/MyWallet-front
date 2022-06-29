@@ -62,7 +62,7 @@ function Register () {
         )
     }
 
-const Toggle = toggleButton();
+const ButtonToggle = toggleButton();
 
     return(
 
@@ -97,7 +97,7 @@ const Toggle = toggleButton();
             placeholder= "Confirme a senha"
             required
             ></input>
-            {Toggle}
+            {ButtonToggle}
             </form>
             <Link to="/" >
             <p>Já tem uma conta? Entre agora!</p>

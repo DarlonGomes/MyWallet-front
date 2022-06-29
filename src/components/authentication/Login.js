@@ -60,7 +60,7 @@ function Login (){
         )
     }
 
-const Toggle = toggleButton();
+const ButtonToggle = toggleButton();
 
     return(
         <Page>
@@ -80,7 +80,7 @@ const Toggle = toggleButton();
             placeholder= "Senha"
             required
             ></input>
-            {Toggle}
+            {ButtonToggle}
             </form>
             <Link to="/sign-up" >
             <p>Primeira vez? Cadastre-se!</p>
