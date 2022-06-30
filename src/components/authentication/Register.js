@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import axios from "axios";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { ThreeDots } from "react-loader-spinner";
 
@@ -12,12 +12,10 @@ function Register () {
     const [ password, setPassword] = useState("");
     const [ confirmPassword, setConfirmPassword] = useState("");
     const [isDisabled, setIsDisabled] = useState(false);
+    
+   
 
-    useEffect(()=>{
-
-    })
-
-    function validate (event){
+    async function validate (event){
 
         event.preventDefault();
 
@@ -26,34 +24,28 @@ function Register () {
             name: name,
             email: email,
             password: password,
-            confirmPassword: confirmPassword
+            repeat_password: confirmPassword
         }
-           //axios.post('https://mock-api.driven.com.br/api/v4/driven-plus/auth/login', body)
-                //.then((response)=>{
-                   // setData(response.data);
-                   // localStorage.setItem("user", JSON.stringify(body));
-                    //setToken({headers:{
-                    //    Authorization: `Bearer ${response.data.token}`
-                  // }})
-                    //if(response.data.membership === null){
-                   //     navigate("/subscriptions")
-                      
-                   // }else{
-                      //  navigate("/home")} 
-               // })
-               // .catch((res) => {
-                //    setEmail("");
-               //     setPassword("");
-                //    setIsDisabled(false);
-              //      alert("Não foi possível efetuar o login. Cheque suas credenciais e tente novamente")
-           // })
 
+        try {
+            const promise = axios.post('http://localhost:5000/user/signup', body);
+            setIsDisabled(false);
+            //TOAST DE SUCESSO
+            navigate("/");
+        } catch (error) {
+            setEmail("");
+            setName("");
+            setPassword("");
+            setConfirmPassword("");
+            setIsDisabled(false)
+            //TOAST DE ERRO
+        }
     }
 
     function toggleButton () {
         if(isDisabled === true){
             return (
-                <button><ThreeDots  color="#FFFFFF" height={17} width={326} /></button>
+                <button disabled={true} ><ThreeDots  color="#FFFFFF" height={17} width={326} /></button>
             )
         }
 
@@ -62,7 +54,7 @@ function Register () {
         )
     }
 
-const ButtonToggle = toggleButton();
+    const ButtonToggle = toggleButton();
 
     return(
 
@@ -75,6 +67,7 @@ const ButtonToggle = toggleButton();
             onChange={e=> setName(e.target.value)}
             placeholder= "Nome"
             required
+            disabled= {isDisabled} 
             ></input>
             <input
             type="email"
@@ -82,6 +75,7 @@ const ButtonToggle = toggleButton();
             onChange={e=> setEmail(e.target.value)}
             placeholder= "E-mail"
             required
+            disabled= {isDisabled} 
             ></input>
             <input
             type="password"
@@ -89,6 +83,7 @@ const ButtonToggle = toggleButton();
             onChange={e => setPassword(e.target.value)}
             placeholder= "Senha"
             required
+            disabled= {isDisabled} 
             ></input>
             <input
             type="password"
@@ -96,6 +91,7 @@ const ButtonToggle = toggleButton();
             onChange={e=> setConfirmPassword(e.target.value)}
             placeholder= "Confirme a senha"
             required
+            disabled= {isDisabled} 
             ></input>
             {ButtonToggle}
             </form>
@@ -110,15 +106,18 @@ const ButtonToggle = toggleButton();
 export default Register;
 
 const Page = styled.div`
+    width: 100vw;
     height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     background: #8C11BE;
+    padding: 0 25px;
+    box-sizing: border-box;
 
     form{
-        width: 326px;
+        width: 100%;
         font-family: 'Raleway', sans-serif;
         font-weight: 400;
         font-size: 20px;
@@ -126,10 +125,9 @@ const Page = styled.div`
     }
 
     input{
-        width: 326px;
+        width: 100%;
         height: 58px;
         background: ${(props) => props.isDisabled ? "#F2F2F2" : "#FFFFFF"};
-        pointer-events: ${(props) => props.isDisabled ? "none" : "all"};
         border-radius: 5px;
         border: none;
         margin-bottom: 13px;
@@ -138,13 +136,12 @@ const Page = styled.div`
     }
 
     button{
-        width: 326px;
+        width: 100%;
         height: 46px;
         background-color: #A328D6;
         border: none;
         border-radius: 5px;
         color: #FFFFFF;
-        pointer-events: ${(props) => props.isDisabled ? "none" : "all"};
         font-family: 'Raleway';
         font-size: 20px;
         font-weight: 700;
