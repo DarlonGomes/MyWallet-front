@@ -15,7 +15,9 @@ export default function App () {
                     <Route path="/sign-up" element={<Register/>} />
                     <Route path="/home" element={<Home/>}/>
                     <Route path="/home/spent" element={<Spending/>} />
+                    <Route path="/home/spent/:id" element={<Spending/>} />
                     <Route path="/home/income" element={<Income/>} />
+                    <Route path="/home/income/:id" element={<Income/>} />
                 </Routes>
             </BrowserRouter>
         </DataProvider>

@@ -1,47 +1,59 @@
 import styled from "styled-components";
 import axios from "axios";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useContext, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import { ThreeDots } from "react-loader-spinner";
+import { UserContext } from "../../context/UserContext.js";
 
 function Spending () {
-    const [ value, setValue ] = useState("");
+    const {id} = useParams() 
+    const [ value, setValue ] = useState();
     const [ description, setDescription] = useState("");
     const [ isDisabled, setIsDisabled] = useState(false);
-
-    function validate (event){
-
+    const { token, data } = useContext(UserContext);
+    const navigate = useNavigate();
+    
+    async function validate (event){
         event.preventDefault();
-
-       
         setIsDisabled(true);
-        const body = {
-            value: value,
-            text: description
+
+        if(!id){
+            const body = {
+                value: parseFloat(value),
+                text: description
+            }
+            try {
+                await axios.post('http://localhost:5000/wallet/currency', body, token);
+                setIsDisabled(false);
+                navigate("/home");
+                
+            } catch (error) {
+                alert("Deu bosta, me troca por toast pfv");
+                setValue();
+                setDescription("");
+                setIsDisabled(false);
+            }
+        }else{
+            const body = {
+                value: parseFloat(value),
+                text: description,
+                id: id
+            }
+            try {
+                await axios.put('http://localhost:5000/wallet/currency', body, token);
+                setIsDisabled(false);
+                navigate("/home");
+                
+            } catch (error) {
+                alert("Deu bosta, me troca por toast pfv");
+                setValue();
+                setDescription("");
+                setIsDisabled(false);
+            }
         }
-           //axios.post('https://mock-api.driven.com.br/api/v4/driven-plus/auth/login', body)
-                //.then((response)=>{
-                   // setData(response.data);
-                   // localStorage.setItem("user", JSON.stringify(body));
-                    //setToken({headers:{
-                    //    Authorization: `Bearer ${response.data.token}`
-                  // }})
-                    //if(response.data.membership === null){
-                   //     navigate("/subscriptions")
-                      
-                   // }else{
-                      //  navigate("/home")} 
-               // })
-               // .catch((res) => {
-                //    setEmail("");
-               //     setPassword("");
-                //    setIsDisabled(false);
-              //      alert("Não foi possível efetuar o login. Cheque suas credenciais e tente novamente")
-           // })
-
-    }
-
-    function toggleButton () {
+        }
+    
+    const ButtonToggle = () => {
         if(isDisabled === true){
             return (
                 <button><ThreeDots  color="#FFFFFF" height={17} width={326} /></button>
@@ -53,12 +65,23 @@ function Spending () {
         )
     }
 
-    const ButtonToggle = toggleButton();
-
+    const HeaderToggle = () => {
+        if(!id){
+            return(
+                <h3>Nova saída</h3>
+            )
+        }else{
+            return(
+                <h3>Editar saída</h3>
+            )
+        }
+    }
+    
+    console.log(id);
     return(
         <Page>
             <Title>
-            <h3>Nova saída</h3>
+            <HeaderToggle/>
             </Title>
             <form onSubmit={(event)=>validate(event)}>
             <input
@@ -75,7 +98,7 @@ function Spending () {
             placeholder= "Descrição"
             required
             ></input>
-            {ButtonToggle}
+            <ButtonToggle/>
             </form>
         </Page>
     )

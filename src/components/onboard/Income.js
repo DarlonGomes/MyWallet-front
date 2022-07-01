@@ -1,64 +1,89 @@
 import styled from "styled-components";
 import axios from "axios";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState, useContext } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import { ThreeDots } from "react-loader-spinner";
+import { UserContext } from "../../context/UserContext.js"
 
-    function Income () {
-        const [ value, setValue ] = useState("");
-        const [ description, setDescription] = useState("");
-        const [ isDisabled, setIsDisabled] = useState(false);
+function Income () {
+    const navigate = useNavigate();
+    const {id} = useParams()
+    const { token, data } = useContext(UserContext);
+    const [ value, setValue ] = useState();
+    const [ description, setDescription] = useState("");
+    const [ isDisabled, setIsDisabled] = useState(false);
     
-        function validate (event){
-    
-            event.preventDefault();
-    
-           
-            setIsDisabled(true);
+    async function validate (event){
+        event.preventDefault();
+        setIsDisabled(true);
+
+        
+        if(!id){
             const body = {
-                value: value,
+                value: parseFloat(value),
                 text: description
             }
-               //axios.post('https://mock-api.driven.com.br/api/v4/driven-plus/auth/login', body)
-                    //.then((response)=>{
-                       // setData(response.data);
-                       // localStorage.setItem("user", JSON.stringify(body));
-                        //setToken({headers:{
-                        //    Authorization: `Bearer ${response.data.token}`
-                      // }})
-                        //if(response.data.membership === null){
-                       //     navigate("/subscriptions")
-                          
-                       // }else{
-                          //  navigate("/home")} 
-                   // })
-                   // .catch((res) => {
-                    //    setEmail("");
-                   //     setPassword("");
-                    //    setIsDisabled(false);
-                  //      alert("Não foi possível efetuar o login. Cheque suas credenciais e tente novamente")
-               // })
-    
-        }
-    
-        function toggleButton () {
-            if(isDisabled === true){
-                return (
-                    <button><ThreeDots  color="#FFFFFF" height={17} width={326} /></button>
-                )
+            try {
+                await axios.post('http://localhost:5000/wallet/currency', body, token);
+                setIsDisabled(false);
+                navigate("/home");
+                
+            } catch (error) {
+                alert("Deu bosta, me troca por toast pfv");
+                setValue();
+                setDescription("");
+                setIsDisabled(false);
             }
-    
+        }else{
+            const body = {
+                value: parseFloat(value),
+                text: description,
+                id: id
+            }
+            try {
+                await axios.put('http://localhost:5000/wallet/currency', body, token);
+                setIsDisabled(false);
+                navigate("/home");
+                
+            } catch (error) {
+                alert("Deu bosta, me troca por toast pfv");
+                setValue();
+                setDescription("");
+                setIsDisabled(false);
+            }
+        }
+        }
+        
+    const HeaderToggle = () => {
+        if(!id){
             return(
-                <button type="submit">Salvar entrada</button>
+                   <h3>Nova entrada</h3>
+            )
+        }else{
+            return(
+                <h3>Editar entrada</h3>
             )
         }
+    }
     
-        const ButtonToggle = toggleButton();
+    const ButtonToggle = () => {
+        if(isDisabled === true){
+            return (
+                <button><ThreeDots  color="#FFFFFF" height={17} width={326} /></button>
+            )
+        };
+
+        return(
+            <button type="submit">Salvar entrada</button>
+        )
+    }
     
+        console.log(id);
+
         return(
             <Page>
                 <Title>
-                <h3>Nova entrada</h3>
+                <HeaderToggle/>
                 </Title>
                 <form onSubmit={(event)=>validate(event)}>
                 <input
@@ -67,6 +92,7 @@ import { ThreeDots } from "react-loader-spinner";
                 onChange={e=> setValue(e.target.value)}
                 placeholder= "Valor"
                 required
+                disabled= {isDisabled}
                 ></input>
                 <input
                 type="text"
@@ -74,8 +100,9 @@ import { ThreeDots } from "react-loader-spinner";
                 onChange={e => setDescription(e.target.value)}
                 placeholder= "Descrição"
                 required
+                disabled= {isDisabled}
                 ></input>
-                {ButtonToggle}
+                <ButtonToggle/>
                 </form>
             </Page>
         )
@@ -99,7 +126,6 @@ import { ThreeDots } from "react-loader-spinner";
             width: 326px;
             height: 58px;
             background: ${(props) => props.isDisabled ? "#F2F2F2" : "#FFFFFF"};
-            pointer-events: ${(props) => props.isDisabled ? "none" : "all"};
             font-family: 'Raleway', sans-serif;
             font-weight: 400;
             font-size: 20px;
@@ -118,7 +144,6 @@ import { ThreeDots } from "react-loader-spinner";
             border: none;
             border-radius: 5px;
             color: #FFFFFF;
-            pointer-events: ${(props) => props.isDisabled ? "none" : "all"};
             font-family: 'Raleway';
             font-size: 20px;
             font-weight: 700;

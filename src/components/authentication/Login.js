@@ -22,7 +22,7 @@ function Login (){
                     setPassword(body.password);
 
                     const response = await axios.post('http://localhost:5000/user/signin', body)
-                    setData(response.data.name);
+                    setData(response.data);
                     setToken({headers:{
                         Authorization: `Bearer ${response.data.token}`
                    }})

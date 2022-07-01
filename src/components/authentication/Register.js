@@ -28,7 +28,7 @@ function Register () {
         }
 
         try {
-            const promise = axios.post('http://localhost:5000/user/signup', body);
+            await axios.post('http://localhost:5000/user/signup', body);
             setIsDisabled(false);
             //TOAST DE SUCESSO
             navigate("/");
