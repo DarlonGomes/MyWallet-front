@@ -55,7 +55,7 @@ function Register () {
         }
 
         return(
-            <button type="submit">Entrar</button>
+            <button type="submit">Cadastrar</button>
         )
     }
 
