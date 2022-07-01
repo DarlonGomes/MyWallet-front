@@ -8,7 +8,7 @@ import { UserContext } from "../../context/UserContext.js"
 function Income () {
     const navigate = useNavigate();
     const {id} = useParams()
-    const { token, data } = useContext(UserContext);
+    const { token } = useContext(UserContext);
     const [ value, setValue ] = useState();
     const [ description, setDescription] = useState("");
     const [ isDisabled, setIsDisabled] = useState(false);
@@ -24,7 +24,7 @@ function Income () {
                 text: description
             }
             try {
-                await axios.post('http://localhost:5000/wallet/currency', body, token);
+                await axios.post('https://project-my-wallet-back.herokuapp.com/wallet/currency', body, token);
                 setIsDisabled(false);
                 navigate("/home");
                 
@@ -41,7 +41,7 @@ function Income () {
                 id: id
             }
             try {
-                await axios.put('http://localhost:5000/wallet/currency', body, token);
+                await axios.put('https://project-my-wallet-back.herokuapp.com/wallet/currency', body, token);
                 setIsDisabled(false);
                 navigate("/home");
                 
@@ -78,7 +78,7 @@ function Income () {
         )
     }
     
-        console.log(id);
+        
 
         return(
             <Page>
@@ -104,6 +104,7 @@ function Income () {
                 ></input>
                 <ButtonToggle/>
                 </form>
+                <button className="cancel" onClick={()=>{navigate("/home")}}>Cancelar</button>
             </Page>
         )
     }
@@ -111,19 +112,20 @@ function Income () {
     export default Income;
     
     const Page = styled.div`
+        width: 100vw;
         height: 100vh;
         display: flex;
         flex-direction: column;
         align-items: center;
         background: #8C11BE;
-    
+        padding: 0 20px;
+        box-sizing: border-box;
         form{
-            width: 326px;
-            
+            width:100%;
         }
     
         input{
-            width: 326px;
+            width:100%;
             height: 58px;
             background: ${(props) => props.isDisabled ? "#F2F2F2" : "#FFFFFF"};
             font-family: 'Raleway', sans-serif;
@@ -138,7 +140,7 @@ function Income () {
         }
     
         button{
-            width: 326px;
+            width:100%;
             height: 46px;
             background-color: #A328D6;
             border: none;
@@ -155,6 +157,12 @@ function Income () {
             font-size: 26px;
             color: #FFFFFF;
             margin: 25px 0 40px;
+        }
+
+        .cancel{
+            margin-top: 13px;
+            background-color: #A075B1;
+            color: #DCDCDC;
         }
     `
     const Title = styled.div`

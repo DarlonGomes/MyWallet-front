@@ -10,7 +10,7 @@ function Spending () {
     const [ value, setValue ] = useState();
     const [ description, setDescription] = useState("");
     const [ isDisabled, setIsDisabled] = useState(false);
-    const { token, data } = useContext(UserContext);
+    const { token } = useContext(UserContext);
     const navigate = useNavigate();
     
     async function validate (event){
@@ -19,11 +19,11 @@ function Spending () {
 
         if(!id){
             const body = {
-                value: parseFloat(value),
+                value: parseFloat(-value),
                 text: description
             }
             try {
-                await axios.post('http://localhost:5000/wallet/currency', body, token);
+                await axios.post('https://project-my-wallet-back.herokuapp.com/wallet/currency', body, token);
                 setIsDisabled(false);
                 navigate("/home");
                 
@@ -35,12 +35,12 @@ function Spending () {
             }
         }else{
             const body = {
-                value: parseFloat(value),
+                value: parseFloat(-value) ,
                 text: description,
                 id: id
             }
             try {
-                await axios.put('http://localhost:5000/wallet/currency', body, token);
+                await axios.put('https://project-my-wallet-back.herokuapp.com/wallet/currency', body, token);
                 setIsDisabled(false);
                 navigate("/home");
                 
@@ -77,7 +77,6 @@ function Spending () {
         }
     }
     
-    console.log(id);
     return(
         <Page>
             <Title>
@@ -100,6 +99,7 @@ function Spending () {
             ></input>
             <ButtonToggle/>
             </form>
+            <button className="cancel" onClick={()=>{navigate("/home")}}>Cancelar</button>
         </Page>
     )
 }
@@ -107,14 +107,17 @@ function Spending () {
 export default Spending;
 
 const Page = styled.div`
+    width: 100vw;
     height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
     background: #8C11BE;
+    padding: 0 20px;
+    box-sizing: border-box;
 
     form{
-        width: 326px;
+        width: 100%;
         font-family: 'Raleway', sans-serif;
         font-weight: 400;
         font-size: 20px;
@@ -122,7 +125,7 @@ const Page = styled.div`
     }
 
     input{
-        width: 326px;
+        width: 100%;
         height: 58px;
         font-family: 'Raleway', sans-serif;
         font-weight: 400;
@@ -138,7 +141,7 @@ const Page = styled.div`
     }
 
     button{
-        width: 326px;
+        width: 100%;
         height: 46px;
         background-color: #A328D6;
         border: none;
@@ -157,6 +160,13 @@ const Page = styled.div`
         color: #FFFFFF;
         margin: 25px 0 40px;
     }
+   
+    .cancel{
+        margin-top: 13px;
+        background-color: #A075B1;
+        color: #DCDCDC;
+    }
+    
 `
 
 const Title = styled.div`

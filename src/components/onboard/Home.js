@@ -6,6 +6,8 @@ import plus from '../../assets/add-circle-outline.svg'
 import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../context/UserContext";
+import Skeleton from "react-loading-skeleton";
+import 'react-loading-skeleton/dist/skeleton.css';
 
 function Home () {
     const [ receipt, setReceipt ] = useState();
@@ -28,19 +30,20 @@ function Home () {
 
     const getData = async () => {
         try {
-            const response = await axios.get('http://localhost:5000/wallet/receipt',token );
-            setBalance(response.data.balance);
-            setReceipt(response.data.receipt);
-            console.log(response.data.receipt.length)
-            console.log(response.data.balance)
-            switch (response.data.receipt.length) {
-                case 0 :
-                    setRender("empty");
-                    break;
-                default:
-                    setRender("notEmpty");
-                    break;
-            }
+            const response = await axios.get('https://project-my-wallet-back.herokuapp.com/wallet/receipt',token );
+
+            setTimeout(() => {
+                setBalance(response.data.balance);
+                setReceipt(response.data.receipt);
+                switch (response.data.receipt.length) {
+                    case 0 :
+                        setRender("empty");
+                        break;
+                    default:
+                        setRender("notEmpty");
+                        break;
+                }
+            }, "1000")
         } catch (error) {
             navigate("/")
         }
@@ -48,12 +51,14 @@ function Home () {
 
     const deleteData = async (element) =>{
         const id = element;
-        try {
-            console.log(id)
-             await axios.delete(`http://localhost:5000/wallet/currency/${id}`, token);
-            getData();
-        } catch (error) {
-            console.log(error)
+        const answer = window.confirm("Deseja deletar essa nota?")
+        if(answer){
+            try {
+                 await axios.delete(`https://project-my-wallet-back.herokuapp.com/wallet/currency/${id}`, token);
+                getData();
+            } catch (error) {
+                alert("Algum erro ocorreu")
+            }
         }
     }
 
@@ -68,20 +73,20 @@ function Home () {
 
     const checkValue = (element) =>{
         if(element.value < 0){
-            console.log(element._id)
+            
             return (
-                    <Receipt key={element._id} onClick= {() => {editSpending(element._id)}}>
+                    <Receipt key={element._id}>
                         <p className="date">{element.date}</p>
-                        <p className="text">{element.text}</p>
+                        <p className="text" onClick= {() => {editSpending(element._id)}}>{element.text}</p>
                         <p className="negative">{element.value}</p>
                         <p className="info" onClick={() => {deleteData(element._id)}}>X</p>
                     </Receipt>
             )
         }else{
             return (
-                <Receipt key={element._id} onClick= {()=>{editIncome(element._id)}}>
+                <Receipt key={element._id}>
                     <p className="date">{element.date}</p>
-                    <p className="text">{element.text}</p>
+                    <p className="text" onClick={()=>{editIncome(element._id)}}>{element.text}</p>
                     <p className="positive">{element.value}</p>
                     <p className="info" onClick={() => {deleteData(element._id)}}>X</p>
                 </Receipt>
@@ -116,9 +121,35 @@ function Home () {
         
             default:
                 return(
-                    <EmptyContent>
-                        <p>Carregando papai</p>
-                    </EmptyContent>
+                    <Content>
+                        <div className="spacer">
+                            <Skeleton />
+                        </div>
+                        <div className="spacer">
+                            <Skeleton />
+                        </div>
+                        <div className="spacer">
+                            <Skeleton />
+                        </div>
+                        <div className="spacer">
+                            <Skeleton />
+                        </div>
+                        <div className="spacer">
+                            <Skeleton />
+                        </div>
+                        <div className="spacer">
+                            <Skeleton />
+                        </div>
+                        <div className="spacer">
+                            <Skeleton />
+                        </div>
+                        <div className="spacer">
+                            <Skeleton />
+                        </div>
+                        <div className="spacer">
+                            <Skeleton />
+                        </div>
+                    </Content>
                 );
         }   
     }
@@ -127,7 +158,7 @@ function Home () {
         switch (render) {
             case "loading":
                 return(
-                    <h3>Olá, USER </h3>
+                    <h3> <Skeleton width={300} baseColor="#A328D6" highlightColor="#C345F7"/> </h3>
                 )
             default:
                 return(
@@ -135,6 +166,8 @@ function Home () {
                 )
         }
     }
+
+
 
     return(
         <Page>
@@ -209,6 +242,9 @@ const Content = styled.div`
     p{
         color: #000000;
     }
+    .spacer{
+        margin-bottom: 20px;
+    }
 `;
 
 const EmptyContent = styled.div`
@@ -272,12 +308,12 @@ const Receipt = styled.div`
     width: 100%;
     display: flex;
     flex-direction: row;
-    margin-bottom: 25px;
 
     p{
         font-family: 'Raleway';
         font-size: 16px;
         font-weight: 400;
+        line-height: 35px;
     }
 
     .date{
@@ -296,6 +332,8 @@ const Receipt = styled.div`
     .text{
         color: #000000;
         flex: 1;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 
     .info{

@@ -4,6 +4,8 @@ import { useContext, useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { UserContext } from "../../context/UserContext";
 import { ThreeDots } from "react-loader-spinner";
+import { ToastContainer, toast } from "react-toastify";
+
 
 function Login (){
     const navigate = useNavigate()
@@ -12,6 +14,7 @@ function Login (){
     const [ email, setEmail] = useState("");
     const [isDisabled, setIsDisabled] = useState(false);
 
+  
     useEffect(()=>{
         const autoSignIn = async() => {
             try {
@@ -21,11 +24,12 @@ function Login (){
                     setEmail(body.email);
                     setPassword(body.password);
 
-                    const response = await axios.post('http://localhost:5000/user/signin', body)
+                    const response = await axios.post('https://project-my-wallet-back.herokuapp.com/user/signin', body)
                     setData(response.data);
                     setToken({headers:{
                         Authorization: `Bearer ${response.data.token}`
                    }})
+                   
                     setIsDisabled(false);
                     navigate("/home");
                     ;
@@ -38,8 +42,6 @@ function Login (){
     async function validate (event){
 
         event.preventDefault();
-
-       
         setIsDisabled(true);
         const body = {
             email: email,
@@ -47,20 +49,30 @@ function Login (){
         }
 
         try {
-           const response = await axios.post('http://localhost:5000/user/signin', body)
+           const response = await axios.post('https://project-my-wallet-back.herokuapp.com/user/signin', body)
+
+           setTimeout(()=>{
             setData(response.data.name);
             setToken(response.data.token);
             localStorage.setItem('MyWalletUser', JSON.stringify(body));
             navigate('/home');
+           }, "750")
 
         } catch (error) {
-            setEmail("");
-            setPassword("");
-            setIsDisabled(false);
-            //toast nele
+            errorHandler();
         }
     }
 
+    function errorHandler (){
+        setTimeout(()=>{
+            setEmail("");
+            setPassword("");
+            setIsDisabled(false);
+            alert("Dados não válidos");
+        },"750")
+        
+    }
+    
     function toggleButton () {
         if(isDisabled === true){
             return (
@@ -77,6 +89,15 @@ const ButtonToggle = toggleButton();
 
     return(
         <Page>
+            <ToastContainer
+            position="top-center"
+            autoClose={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss={false}
+            draggable
+            />
             <h3>MyWallet</h3>
             <form onSubmit={(event)=>validate(event)}>
             <input

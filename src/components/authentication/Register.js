@@ -28,17 +28,22 @@ function Register () {
         }
 
         try {
-            await axios.post('http://localhost:5000/user/signup', body);
-            setIsDisabled(false);
-            //TOAST DE SUCESSO
-            navigate("/");
+            await axios.post('https://project-my-wallet-back.herokuapp.com/user/signup', body);
+
+            setTimeout(()=>{
+                setIsDisabled(false);
+                //TOAST DE SUCESSO
+                navigate("/");
+            },"1500");
         } catch (error) {
-            setEmail("");
-            setName("");
-            setPassword("");
-            setConfirmPassword("");
-            setIsDisabled(false)
-            //TOAST DE ERRO
+            setTimeout(()=>{
+                setEmail("");
+                setName("");
+                setPassword("");
+                setConfirmPassword("");
+                setIsDisabled(false);
+                alert("Dados não válidos, tente novamente")
+            },"1500")
         }
     }
 
