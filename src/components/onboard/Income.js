@@ -69,7 +69,7 @@ function Income () {
     const ButtonToggle = () => {
         if(isDisabled === true){
             return (
-                <button><ThreeDots  color="#FFFFFF" height={17} width={326} /></button>
+                <button><ThreeDots  color="#FFFFFF" height={17} width={"100%"} /></button>
             )
         };
 
@@ -137,6 +137,7 @@ function Income () {
             margin-bottom: 13px;
             padding: 0 10px;
             box-sizing: border-box;
+            ::placeholder{color: #000000}
         }
     
         button{

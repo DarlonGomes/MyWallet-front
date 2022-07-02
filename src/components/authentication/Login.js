@@ -160,6 +160,11 @@ const Page = styled.div`
         margin-bottom: 13px;
         padding: 0 10px;
         box-sizing: border-box;
+        font-family: 'Raleway', sans-serif;
+        font-weight: 400;
+        font-size: 20px;
+        color: #000000;
+        ::placeholder{color: #000000}
     }
 
     button{

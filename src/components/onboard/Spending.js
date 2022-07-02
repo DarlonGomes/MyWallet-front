@@ -56,7 +56,7 @@ function Spending () {
     const ButtonToggle = () => {
         if(isDisabled === true){
             return (
-                <button><ThreeDots  color="#FFFFFF" height={17} width={326} /></button>
+                <button><ThreeDots  color="#FFFFFF" height={17} width={"100%"} /></button>
             )
         }
 
@@ -132,12 +132,12 @@ const Page = styled.div`
         font-size: 20px;
         color: #000000;
         background: ${(props) => props.isDisabled ? "#F2F2F2" : "#FFFFFF"};
-        pointer-events: ${(props) => props.isDisabled ? "none" : "all"};
         border-radius: 5px;
         border: none;
         margin-bottom: 13px;
         padding: 0 10px;
         box-sizing: border-box;
+        ::placeholder{color: #000000}
     }
 
     button{

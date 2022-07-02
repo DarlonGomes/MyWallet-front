@@ -70,7 +70,7 @@ function Register () {
     function toggleButton () {
         if(isDisabled === true){
             return (
-                <button disabled={true} ><ThreeDots  color="#FFFFFF" height={17} width={326} /></button>
+                <button disabled={true} ><ThreeDots  color="#FFFFFF" height={17} width={"100%"} /></button>
             )
         }
 
@@ -159,6 +159,11 @@ const Page = styled.div`
         margin-bottom: 13px;
         padding: 0 10px;
         box-sizing: border-box;
+        font-family: 'Raleway', sans-serif;
+        font-weight: 400;
+        font-size: 20px;
+        color: #000000;
+        ::placeholder{color: #000000}
     }
 
     button{
