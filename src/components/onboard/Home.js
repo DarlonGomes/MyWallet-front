@@ -8,6 +8,8 @@ import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../context/UserContext";
 import Skeleton from "react-loading-skeleton";
 import 'react-loading-skeleton/dist/skeleton.css';
+import { ToastContainer, toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 function Home () {
     const [ receipt, setReceipt ] = useState();
@@ -56,8 +58,27 @@ function Home () {
             try {
                  await axios.delete(`https://project-my-wallet-back.herokuapp.com/wallet/currency/${id}`, token);
                 getData();
+                toast.success('Sucesso', {
+                    position: "top-center",
+                    autoClose: 1000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "colored"
+                    });
             } catch (error) {
-                alert("Algum erro ocorreu")
+                toast.error('Não foi possível deletar', {
+                    position: "top-center",
+                    autoClose: 1000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "colored"
+                    });
             }
         }
     }
@@ -170,12 +191,19 @@ function Home () {
 
 
     return(
+        <>
+        <ToastContainer/>
         <Page>
             <Title>
                 <ToggleUser/>
                 <img onClick={()=>{
-                    localStorage.clear();
-                    navigate("/")
+                    const res = window.confirm("Deseja encerrar sua sessão?");
+                    if(res){
+                        setTimeout(()=>{
+                            localStorage.clear();
+                            navigate("/")
+                        },"500")
+                    }
                 }} src={exit} alt="Sair" />
             </Title>
             <ToggleContent/>
@@ -190,6 +218,7 @@ function Home () {
                 </Click>
             </ButtonWrapper>
         </Page>
+        </>
     )
 }
 

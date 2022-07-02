@@ -3,6 +3,8 @@ import axios from "axios";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { ThreeDots } from "react-loader-spinner";
+import { toast, ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 function Register () {
 
@@ -30,11 +32,20 @@ function Register () {
         try {
             await axios.post('https://project-my-wallet-back.herokuapp.com/user/signup', body);
 
+            toast.success('Sucesso!', {
+                position: "top-center",
+                autoClose: 750,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored"
+                });
             setTimeout(()=>{
                 setIsDisabled(false);
-                //TOAST DE SUCESSO
                 navigate("/");
-            },"1500");
+            },"1000");
         } catch (error) {
             setTimeout(()=>{
                 setEmail("");
@@ -42,8 +53,17 @@ function Register () {
                 setPassword("");
                 setConfirmPassword("");
                 setIsDisabled(false);
-                alert("Dados não válidos, tente novamente")
-            },"1500")
+                toast.error('Dados não válidos', {
+                    position: "top-center",
+                    autoClose: 750,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "colored"
+                    });
+            },"750")
         }
     }
 
@@ -62,7 +82,7 @@ function Register () {
     const ButtonToggle = toggleButton();
 
     return(
-
+        <><ToastContainer/>
         <Page>
             <h3>MyWallet</h3>
             <form onSubmit={(event)=>validate(event)}>
@@ -105,6 +125,7 @@ function Register () {
             </Link>
             
         </Page>
+        </>
     )
 }
 

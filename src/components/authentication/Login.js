@@ -5,7 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { UserContext } from "../../context/UserContext";
 import { ThreeDots } from "react-loader-spinner";
 import { ToastContainer, toast } from "react-toastify";
-
+import 'react-toastify/dist/ReactToastify.css';
 
 function Login (){
     const navigate = useNavigate()
@@ -50,11 +50,10 @@ function Login (){
 
         try {
            const response = await axios.post('https://project-my-wallet-back.herokuapp.com/user/signin', body)
-
+           setData(response.data.name);
+           setToken(response.data.token);
+           localStorage.setItem('MyWalletUser', JSON.stringify(body));
            setTimeout(()=>{
-            setData(response.data.name);
-            setToken(response.data.token);
-            localStorage.setItem('MyWalletUser', JSON.stringify(body));
             navigate('/home');
            }, "750")
 
@@ -68,15 +67,23 @@ function Login (){
             setEmail("");
             setPassword("");
             setIsDisabled(false);
-            alert("Dados não válidos");
-        },"750")
-        
+            toast.error('Dados não válidos', {
+                position: "top-center",
+                autoClose: 2000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored"
+                });
+        },"750");
     }
     
     function toggleButton () {
         if(isDisabled === true){
             return (
-                <button disabled={true} ><ThreeDots  color="#FFFFFF" height={17} width={326} /></button>
+                <button disabled={true} ><ThreeDots  color="#FFFFFF" height={17} width={"100%"} /></button>
             )
         }
 
@@ -88,16 +95,11 @@ function Login (){
 const ButtonToggle = toggleButton();
 
     return(
-        <Page>
-            <ToastContainer
-            position="top-center"
-            autoClose={false}
-            newestOnTop={false}
-            closeOnClick
-            rtl={false}
-            pauseOnFocusLoss={false}
-            draggable
+        <>
+        <ToastContainer
             />
+        
+        <Page>
             <h3>MyWallet</h3>
             <form onSubmit={(event)=>validate(event)}>
             <input
@@ -124,6 +126,7 @@ const ButtonToggle = toggleButton();
             
 
         </Page>
+        </>
     )
 }
 
