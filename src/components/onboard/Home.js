@@ -297,7 +297,6 @@ const Content = styled.div`
 const EmptyContent = styled.div`
 
     width: 100%;
-    flex: 1;
     display: flex;
     background-color: #FFFFFF;
     justify-content: center;
