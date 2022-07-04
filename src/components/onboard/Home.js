@@ -268,7 +268,6 @@ const Content = styled.div`
     width: 100%;
     background-color: #FFFFFF;
     display: flex;
-    flex: 1;
     flex-direction: column;
     font-family: 'Raleway';
     font-size: 16px;
@@ -297,6 +296,7 @@ const Content = styled.div`
 const EmptyContent = styled.div`
 
     width: 100%;
+    flex: 1;
     display: flex;
     background-color: #FFFFFF;
     justify-content: center;
