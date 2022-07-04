@@ -272,11 +272,11 @@ const Content = styled.div`
     font-size: 16px;
     font-weight: 400;
     border-radius: 5px;
-    padding: 20px 10px 0px;
+    padding: 10px 10px 0px;
     box-sizing: border-box;
     position: relative;
-    overflow-y: hidden;
-    
+    overflow-y: scroll;
+
     p{
         color: #000000;
     }
