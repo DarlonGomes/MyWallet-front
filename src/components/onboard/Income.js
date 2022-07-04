@@ -93,6 +93,7 @@ function Income () {
                 placeholder= "Valor"
                 required
                 disabled= {isDisabled}
+                min = {1}
                 ></input>
                 <input
                 type="text"

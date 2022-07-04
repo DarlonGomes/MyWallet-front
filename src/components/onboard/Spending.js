@@ -88,6 +88,7 @@ function Spending () {
             value={value}
             onChange={e=> setValue(e.target.value)}
             placeholder= "Valor"
+            min={1}
             required
             ></input>
             <input
