@@ -75,7 +75,7 @@ function Register () {
         }
 
         return(
-            <button type="submit">Cadastrar</button>
+            <button type="submit" disabled={isDisabled}>Cadastrar</button>
         )
     }
 

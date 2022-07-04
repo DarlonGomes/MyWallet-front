@@ -90,12 +90,12 @@ function Spending () {
     const ButtonToggle = () => {
         if(isDisabled === true){
             return (
-                <button><ThreeDots  color="#FFFFFF" height={17} width={"100%"} /></button>
+                <button disabled={isDisabled}><ThreeDots  color="#FFFFFF" height={17} width={"100%"} /></button>
             )
         }
 
         return(
-            <button type="submit">Salvar saída</button>
+            <button type="submit" disabled={isDisabled}>Salvar saída</button>
         )
     }
 

@@ -36,7 +36,7 @@ function Home () {
 
             setTimeout(() => {
                 setBalance(response.data.balance);
-                setReceipt(response.data.receipt);
+                setReceipt(response.data.receipt.reverse());
                 switch (response.data.receipt.length) {
                     case 0 :
                         setRender("empty");
@@ -207,7 +207,7 @@ function Home () {
                     const res = window.confirm("Deseja encerrar sua sessão?");
                     if(res){
                         setTimeout(()=>{
-                            localStorage.clear();
+                            localStorage.removeItem('MyWalletUser');
                             navigate("/")
                         },"500")
                     }

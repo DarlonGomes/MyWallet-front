@@ -103,12 +103,12 @@ function Income () {
     const ButtonToggle = () => {
         if(isDisabled === true){
             return (
-                <button><ThreeDots  color="#FFFFFF" height={17} width={"100%"} /></button>
+                <button disabled={isDisabled}><ThreeDots  color="#FFFFFF" height={17} width={"100%"} /></button>
             )
         };
 
         return(
-            <button type="submit">Salvar entrada</button>
+            <button type="submit" disabled={isDisabled}>Salvar entrada</button>
         )
     }
     

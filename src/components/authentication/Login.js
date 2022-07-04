@@ -35,7 +35,7 @@ function Login (){
                     ;
                 }
             } catch (error) {
-                localStorage.clear()
+                localStorage.removeItem('MyWalletUser')
             }};
 
         autoSignIn()
@@ -90,7 +90,7 @@ function Login (){
         }
 
         return(
-            <button type="submit">Entrar</button>
+            <button type="submit" disabled={isDisabled}>Entrar</button>
         )
     }
 
