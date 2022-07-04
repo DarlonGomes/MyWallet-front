@@ -388,7 +388,7 @@ const Balance = styled.div`
     flex-direction: row;
     align-items: center;
     border-radius: 5px;
-    position: absolute;
+    position: sticky;
     bottom: 0;
     right: 0;
 
