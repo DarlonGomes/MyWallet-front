@@ -275,6 +275,7 @@ const Content = styled.div`
     padding: 10px 10px 0px;
     box-sizing: border-box;
     position: relative;
+    overflow-y: scroll;
 
     p{
         color: #000000;
@@ -369,7 +370,7 @@ const Receipt = styled.div`
 
     .text{
         color: #000000;
-        flex: 1;
+        flex: 1;    </div>
         overflow: hidden;
         text-overflow: ellipsis;
     }
