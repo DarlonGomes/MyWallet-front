@@ -395,9 +395,6 @@ const Balance = styled.div`
     display: flex;
     flex-direction: row;
     align-items: center;
-    position: absolute;
-    bottom: 0px;
-    right: 0px;
     border-radius: 5px;
 
     p{
