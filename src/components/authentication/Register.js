@@ -53,7 +53,7 @@ function Register () {
                 setPassword("");
                 setConfirmPassword("");
                 setIsDisabled(false);
-                toast.error('Dados não válidos', {
+                toast.error('Dados não válidos, cheque-os e tente novamente', {
                     position: "top-center",
                     autoClose: 750,
                     hideProgressBar: false,

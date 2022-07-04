@@ -3,7 +3,9 @@ import axios from "axios";
 import { useState, useContext } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { ThreeDots } from "react-loader-spinner";
-import { UserContext } from "../../context/UserContext.js"
+import { UserContext } from "../../context/UserContext.js";
+import { ToastContainer, toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 function Income () {
     const navigate = useNavigate();
@@ -25,11 +27,22 @@ function Income () {
             }
             try {
                 await axios.post('https://project-my-wallet-back.herokuapp.com/wallet/currency', body, token);
-                setIsDisabled(false);
-                navigate("/home");
+                setTimeout(()=>{
+                    setIsDisabled(false);
+                    navigate("/home");
+                }, "500")
                 
             } catch (error) {
-                alert("Deu bosta, me troca por toast pfv");
+                toast.error('Dados não válidos', {
+                    position: "top-center",
+                    autoClose: 2000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "colored"
+                    });
                 setValue();
                 setDescription("");
                 setIsDisabled(false);
@@ -42,11 +55,32 @@ function Income () {
             }
             try {
                 await axios.put('https://project-my-wallet-back.herokuapp.com/wallet/currency', body, token);
-                setIsDisabled(false);
-                navigate("/home");
+                toast.success('Sucesso', {
+                    position: "top-center",
+                    autoClose: 500,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "colored"
+                    });
+                setTimeout(()=>{
+                    setIsDisabled(false);
+                    navigate("/home");
+                }, "500")
                 
             } catch (error) {
-                alert("Deu bosta, me troca por toast pfv");
+                toast.error('Dados não válidos', {
+                    position: "top-center",
+                    autoClose: 2000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "colored"
+                    });
                 setValue();
                 setDescription("");
                 setIsDisabled(false);
@@ -81,32 +115,35 @@ function Income () {
         
 
         return(
-            <Page>
-                <Title>
-                <HeaderToggle/>
-                </Title>
-                <form onSubmit={(event)=>validate(event)}>
-                <input
-                type="number"
-                value={value}
-                onChange={e=> setValue(e.target.value)}
-                placeholder= "Valor"
-                required
-                disabled= {isDisabled}
-                min = {1}
-                ></input>
-                <input
-                type="text"
-                value={description}
-                onChange={e => setDescription(e.target.value)}
-                placeholder= "Descrição"
-                required
-                disabled= {isDisabled}
-                ></input>
-                <ButtonToggle/>
-                </form>
-                <button className="cancel" onClick={()=>{navigate("/home")}}>Cancelar</button>
-            </Page>
+            <>
+                <ToastContainer/>
+                <Page>
+                    <Title>
+                    <HeaderToggle/>
+                    </Title>
+                    <form onSubmit={(event)=>validate(event)}>
+                    <input
+                    type="number"
+                    value={value}
+                    onChange={e=> setValue(e.target.value)}
+                    placeholder= "Valor"
+                    required
+                    disabled= {isDisabled}
+                    min = {1}
+                    ></input>
+                    <input
+                    type="text"
+                    value={description}
+                    onChange={e => setDescription(e.target.value)}
+                    placeholder= "Descrição"
+                    required
+                    disabled= {isDisabled}
+                    ></input>
+                    <ButtonToggle/>
+                    </form>
+                    <button className="cancel" onClick={()=>{navigate("/home")}}>Cancelar</button>
+                </Page>
+            </>
         )
     }
     

@@ -39,7 +39,7 @@ function Login (){
         autoSignIn()
     },[]);
 
-    async function validate (event){
+    async function validateLogin (event){
 
         event.preventDefault();
         setIsDisabled(true);
@@ -67,7 +67,7 @@ function Login (){
             setEmail("");
             setPassword("");
             setIsDisabled(false);
-            toast.error('Dados não válidos', {
+            toast.error('Dados não válidos, cheque-os e tente novamente', {
                 position: "top-center",
                 autoClose: 2000,
                 hideProgressBar: false,
@@ -101,7 +101,7 @@ const ButtonToggle = toggleButton();
         
         <Page>
             <h3>MyWallet</h3>
-            <form onSubmit={(event)=>validate(event)}>
+            <form onSubmit={(event)=>validateLogin(event)}>
             <input
             type="email"
             value={email}
