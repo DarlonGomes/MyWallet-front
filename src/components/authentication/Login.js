@@ -34,7 +34,9 @@ function Login (){
                     navigate("/home");
                     ;
                 }
-            } catch (error) {}};
+            } catch (error) {
+                localStorage.clear()
+            }};
 
         autoSignIn()
     },[]);
