@@ -68,7 +68,7 @@ function Income () {
                 setTimeout(()=>{
                     setIsDisabled(false);
                     navigate("/home");
-                }, "500")
+                }, "750")
                 
             } catch (error) {
                 toast.error('Dados não válidos', {
