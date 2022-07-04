@@ -140,9 +140,7 @@ function Home () {
             case "notEmpty":
                 return(
                     <Content>
-                        <div className="container">
                         {receipt.map((element)=> checkValue(element))}
-                        </div>
                         <Balance>
                             <p className="text">SALDO</p><p className={color}>{balance.total}</p>
                         </Balance>
@@ -268,6 +266,7 @@ const Content = styled.div`
     width: 100%;
     background-color: #FFFFFF;
     display: flex;
+    flex: 1;
     flex-direction: column;
     font-family: 'Raleway';
     font-size: 16px;
@@ -284,13 +283,6 @@ const Content = styled.div`
         margin-bottom: 20px;
     }
 
-    .container{
-        width: 100%;
-        display: flex;
-        flex: 1;
-        flex-direction: column;
-        overflow-y: scroll;
-    }
 `;
 
 const EmptyContent = styled.div`
@@ -395,6 +387,9 @@ const Balance = styled.div`
     flex-direction: row;
     align-items: center;
     border-radius: 5px;
+    position: absolute;
+    bottom: 0;
+    right: 0;
 
     p{
         font-family: 'Raleway';
