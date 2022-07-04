@@ -53,7 +53,7 @@ function Home () {
 
     const deleteData = async (element) =>{
         const id = element;
-        const answer = window.confirm("Deseja deletar essa nota?")
+        const answer = window.confirm("Deseja deletar esse registro?")
         if(answer){
             try {
                  await axios.delete(`https://project-my-wallet-back.herokuapp.com/wallet/currency/${id}`, token);
@@ -84,11 +84,18 @@ function Home () {
     }
 
     const editIncome = (element) => {
-        navigate(`/home/income/${element}`)
+        const resp = window.confirm("Deseja editar esse registro?")
+        if(resp){
+            navigate(`/home/income/${element}`)
+        }
+        
     }
 
     const editSpending = (element) => {
-        navigate(`/home/spent/${element}`)
+        const resp = window.confirm("Deseja editar esse registro?")
+        if(resp){
+            navigate(`/home/spent/${element}`)
+        }
     }
 
 
