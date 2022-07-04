@@ -20,8 +20,6 @@ function Home () {
 // trocar validação para switch/case;
 
     useEffect(()=>{
-        console.log(data)
-        console.log(token)
         getUser();
         getData();
     },[]);
