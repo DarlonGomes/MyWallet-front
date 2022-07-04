@@ -140,7 +140,9 @@ function Home () {
             case "notEmpty":
                 return(
                     <Content>
+                        <div className="container">
                         {receipt.map((element)=> checkValue(element))}
+                        </div>
                         <Balance>
                             <p className="text">SALDO</p><p className={color}>{balance.total}</p>
                         </Balance>
@@ -275,13 +277,19 @@ const Content = styled.div`
     padding: 10px 10px 0px;
     box-sizing: border-box;
     position: relative;
-    overflow-y: scroll;
 
     p{
         color: #000000;
     }
     .spacer{
         margin-bottom: 20px;
+    }
+
+    .container{
+        width: 100%;
+        display: flex;
+        flex: 1;
+        flex-direction: column;
     }
 `;
 
