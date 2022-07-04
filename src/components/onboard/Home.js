@@ -289,8 +289,8 @@ const Content = styled.div`
 const EmptyContent = styled.div`
 
     width: 100%;
-    flex: 1;
     display: flex;
+    flex: 1;
     background-color: #FFFFFF;
     justify-content: center;
     align-items: center;
@@ -370,7 +370,7 @@ const Receipt = styled.div`
 
     .text{
         color: #000000;
-        flex: 1;    </div>
+        flex: 1;    
         overflow: hidden;
         text-overflow: ellipsis;
     }
@@ -388,7 +388,7 @@ const Balance = styled.div`
     flex-direction: row;
     align-items: center;
     border-radius: 5px;
-    position: sticky;
+    position: absolute;
     bottom: 0;
     right: 0;
 
